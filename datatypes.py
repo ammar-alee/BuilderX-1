@@ -124,7 +124,6 @@ class User(object):
 def serialize_user(self, team=None, domain=None):
     d = self.__dict__.copy()
     if team:
-        print(domain)
         t = serialize_team(team, self, domain)
         d["teams"] = [t]
         d["currentTeam"] = t
@@ -153,4 +152,60 @@ class File(object):
     def get_size() -> int:
         pass
 
-    
+
+@dataclass
+class Session(object):
+    id: int
+    project_id: str
+    session_id: str
+    user_id: int
+    last_polled_at: datetime
+    created_at: datetime
+    updated_at: datetime
+    user: object
+
+def create_session(session_id, user, project):
+    return Session(
+        id=1,
+        project_id=project.id,
+        session_id=session_id,
+        user_id=user.id,
+        last_polled_at=datetime.now(),
+        created_at=datetime.now(),
+        updated_at=datetime.now(),
+        user=user
+    )
+
+def serialize_session(self):
+    d = self.__dict__.copy()
+    d["user"] = serialize_user(self.user, None, None)
+    return d
+
+
+@dataclass
+class Project(object):
+    id: str
+    userId: str # Representing an int, oh my fucking god
+    name: str
+    teamId: str
+    ownerId: type(None)
+    shareability: int # = 0
+    created_at: datetime
+    updated_at: datetime
+    deleted_at: datetime # = None
+    last_edited_by: str
+    sample: int # = 0
+    last_thumbnail_generated_at: datetime
+    last_edited_at: datetime
+    access: dict
+    isEditable: bool # = True
+
+def serialize_project(self, session=None, team=None):
+    d = self.__dict__.copy()
+    if team:
+        d["team"] = serialize_team(team, None, None)
+
+    if session:
+        d["session"] = serialize_session(session)
+
+    return d

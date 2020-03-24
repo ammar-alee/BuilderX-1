@@ -87,3 +87,23 @@ TEAM = Team(
     domains=[1]
 )
 
+PROJECT = Project(
+    id=1,
+    name="Leet Project 1337",
+    userId=USER.id,
+    teamId=TEAM.id,
+    ownerId=None,
+    shareability=0,
+    created_at=datetime.now(),
+    updated_at=datetime.now(),
+    deleted_at=None,
+    last_edited_by=None,
+    sample=0,
+    last_thumbnail_generated_at=datetime.now(),
+    last_edited_at=datetime.now(),
+    access={
+        "access": "write",
+        "mode": "design_code"
+    },
+    isEditable=True
+)
