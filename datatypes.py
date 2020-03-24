@@ -15,7 +15,7 @@ class Domain(object):
 
 @dataclass
 class Team(object):
-    _id: int
+    id: int
     owner_id: int
     
     name: str
@@ -25,9 +25,9 @@ class Team(object):
     photo_url: str
     
     # What is this
-    stripe_id: int = None
-    current_billing_plan = None
-    vat_id = None
+    stripe_id: int # = None
+    current_billing_plan: type(None) # = None
+    vat_id: type(None) # = None
 
     # When returned, serialized as yyyy-mm-dd hh:mm:ss
     trial_ends_at: datetime
@@ -53,12 +53,18 @@ class Team(object):
     users: List[int] # How STUPID
     domains: List[int]
 
-    tax_rate: int # = 0
+def serialize_team(self, user=None, domain=None):
+    d = self.__dict__.copy()
+    if user:
+        u = serialize_user(user, None)
+        d["users"] = [u]
+        d["domains"] = [domain.__dict__]
+    return d
 
 
 @dataclass
 class User(object):
-    _id: int
+    id: int
     email: str
     name: str
     google_id: str # With an integer content, lol
@@ -114,6 +120,15 @@ class User(object):
 
     # When served, fully serializes the team too
     teams: List[int]
+
+def serialize_user(self, team=None, domain=None):
+    d = self.__dict__.copy()
+    if team:
+        print(domain)
+        t = serialize_team(team, self, domain)
+        d["teams"] = [t]
+        d["currentTeam"] = t
+    return d
 
 
 @dataclass
