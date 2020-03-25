@@ -132,7 +132,7 @@ def serialize_user(self, team=None, domain=None):
 
 @dataclass
 class File(object):
-    _id: int
+    id: int
     projectId: str
     name: str
 

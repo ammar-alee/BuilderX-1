@@ -6,6 +6,7 @@ import os.path
 
 import singletons
 from datatypes import *
+from files import *
 
 
 class CustomJsonEncoder(JSONEncoder):
@@ -69,5 +70,53 @@ def get_project_info(pk):
         ses,
         singletons.TEAM
     ))
+
+@app.route("/api/file-content", methods=["POST"])
+def file_content():
+    name = request.form.get("name")[1:]
+    save_file_metadata(
+        name,
+        request.form.get("contentType")
+    )
+    save_file(
+        name,
+        request.files.get("content")
+    )
+    
+    print(request.form)
+    print(request.files)
+    return "no"
+
+@app.route("/api/poll", methods=["GET", "POST"])
+def poll():
+    ses = create_session(
+        request.json["session_id"],
+        singletons.USER,
+        singletons.PROJECT
+    )
+    return jsonify({
+        "messages": [],
+        "sessions": serialize_session(ses),
+        "project": serialize_project(
+            singletons.PROJECT,
+            ses,
+            singletons.TEAM
+        ),
+        "files": get_poll()
+    })
+
+@app.route("/api/get-files-content/<id>")
+def get_file_content(id):
+    path = request.args.get("fileName")[1:]
+    return send_file(os.path.join("proj/files/", path))
+
+@app.route("/api/files")
+def get_files():
+    return jsonify({
+        "status": False,
+        "messages": None,
+        "data": get_files_descriptors()
+    })
+
 
 app.run(port=8080, debug=True)
