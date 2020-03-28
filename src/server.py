@@ -3,6 +3,7 @@ from flask import send_file
 from flask.json import JSONEncoder
 import os.path
 import json
+import webbrowser
 
 from staticfiles import WWW_DIR, fetch_resource
 import singletons
@@ -29,7 +30,7 @@ def route_static_file(path):
         return render_template(
             "index.html",
             **({
-                "local_url": "http://localhost:8080",
+                "local_url": "http://localhost:9089",
                 "project_id": os.path.basename(path)
             })
         )
@@ -66,7 +67,6 @@ def get_project_pk(pk):
         pk
     )
     proj = get_project_info(pk)
-    print(proj)
     return jsonify(serialize_project(
         proj,
         session,
@@ -130,5 +130,8 @@ def get_files():
         "data": get_files_descriptors(request.args.get("projectId"))
     })
 
+DEBUG=False
+if not DEBUG:
+    webbrowser.open("http://localhost:9089/app/project1")
 
-app.run(debug=True, port=8080)
+app.run(debug=DEBUG, port=9089)

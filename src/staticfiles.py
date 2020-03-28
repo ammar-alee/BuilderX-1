@@ -5,7 +5,6 @@ import os.path
 WWW_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "www"))
 
 def fetch_resource(path):
-    print(path)
     realpath = os.path.join(WWW_DIR, path)
 
     if not os.path.exists(realpath):

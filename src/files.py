@@ -59,8 +59,6 @@ def get_project_info(name):
 def update_project_info(name, info):
     inf = get_project_info(name)
     inf.update(info)
-    print(info)
-    print(inf)
     
     with open(os.path.join(PROJECTS_DIR, name, "metadata.pickle"), "wb") as f:
         pickle.dump(inf, f)
@@ -83,7 +81,6 @@ def get_metadata_path(project, filename):
 
 def get_metadata(project, filename):
     path = get_metadata_path(project, filename)
-    print(path)
     try:
         with open(path, "rb") as f:
             return pickle.load(f)
@@ -105,7 +102,6 @@ def save_file_metadata(project, filename, contentType):
     meta["contentType"] = contentType
 
     ensure_dir(get_metadata_path(project, filename))
-    print(get_metadata_path(project, filename))
     with open(get_metadata_path(project, filename), "wb") as f:
         pickle.dump(meta, f)
 
