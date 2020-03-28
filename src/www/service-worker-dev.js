@@ -1,0 +1,3 @@
+self.addEventListener("fetch",event=>{if(event.request.url.indexOf("/src/assets")>-1||event.request.url.indexOf("/static/media")>-1){event.respondWith(caches.match(event.request).then(response=>{if(response){return response;}
+return fetch(event.request);}).then(response=>{if(response.status===200){return caches.open("assets").then(cache=>{cache.put(event.request.url,response.clone());return response;});}
+return response;}).catch(error=>{}));}});

@@ -107,7 +107,7 @@ def poll():
 
 @app.route("/api/get-files-content/<id>")
 def get_file_content(id):
-    path = request.args.get("fileName")[1:]
+    path = request.args.get("fileName")
     return send_file(os.path.join("proj/files/", path))
 
 @app.route("/api/files")

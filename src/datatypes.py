@@ -164,7 +164,7 @@ class Session(object):
     updated_at: datetime
     user: object
 
-def create_session(session_id, user, project_id)
+def create_session(session_id, user, project_id):
     return Session(
         id=1,
         project_id=project_id,
@@ -200,12 +200,11 @@ class Project(object):
     access: dict
     isEditable: bool # = True
 
-def serialize_project(self, session=None, team=None):
-    d = self.__dict__.copy()
+def serialize_project(project, session=None, team=None):
     if team:
-        d["team"] = serialize_team(team, None, None)
+        project["team"] = serialize_team(team, None, None)
 
     if session:
-        d["session"] = serialize_session(session)
+        project["session"] = serialize_session(session)
 
-    return d
+    return project
