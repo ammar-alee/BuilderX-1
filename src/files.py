@@ -79,6 +79,25 @@ def get_metadata_path(project, filename):
     return os.path.abspath(os.path.join(PROJECTS_DIR, project, "metadata", filename + ".pickle"))
 
 
+def get_index_path(file_id):
+    return os.path.abspath(os.path.join(PROJECTS_DIR, ".index", str(file_id)))
+
+
+def get_index(file_id):
+    try:
+        with open(get_index_path(file_id), "r") as f:
+            return f.read().split("\n")[:2]
+    except FileNotFoundError:
+        return None, None
+
+
+def set_index(file_id, project, filename):
+    path = get_index_path(file_id)
+    ensure_dir(path)
+    with open(path, "w") as f:
+        f.write(project + "\n" + filename)
+
+
 def get_metadata(project, filename):
     path = get_metadata_path(project, filename)
     try:
@@ -90,9 +109,9 @@ def get_metadata(project, filename):
 
 def save_file_metadata(project, filename, contentType):
     meta = get_metadata(project, filename)
-    meta["id"] = meta.get("id", random.randint(1, 100000))
+    meta["id"] = meta.get("id", random.randint(1, 1_000_000_000_000)) # Duplicate ID is expected after 1M files in source code
     meta["name"] = filename
-    meta["projectId"] =meta.get("projectId", 1)
+    meta["projectId"] = meta.get("projectId", 1)
     meta["created_at"] = datetime.now()
     meta["last_modified"] = datetime.now()
     meta["deleted_at"] = None
@@ -105,11 +124,19 @@ def save_file_metadata(project, filename, contentType):
     with open(get_metadata_path(project, filename), "wb") as f:
         pickle.dump(meta, f)
 
+    set_index(meta["id"], project, filename)
+
 
 def save_file(project, filename, file_object):
     path = get_project_file_path(project, filename)
     ensure_dir(path)
     file_object.save(path)
+
+
+def delete_file(file_id):
+    project, filename = get_index(file_id)
+    path = get_project_file_path(project, filename)
+    os.unlink(path) # Good?
 
 
 def get_files_list(project_home):

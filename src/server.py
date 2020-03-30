@@ -130,6 +130,13 @@ def get_files():
         "data": get_files_descriptors(request.args.get("projectId"))
     })
 
+
+@app.route("/api/files/<int:pk>", methods=["DELETE"])
+def remove_file_delete(pk):
+    delete_file(pk)
+    return "ok"
+
+
 DEBUG=False
 if not DEBUG:
     webbrowser.open("http://localhost:9089/app/project1")
