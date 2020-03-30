@@ -52,13 +52,11 @@
             XMLHttpRequest.callback = callback;
         }
         
-        document.addEventListener("load", function() {
-            addXhrCallback((req, args) => {
-                if (~args[1].indexOf("localhost")) {
-                    args[1] = args[1].replace("https://", "http://");
-                }
-                return args;
-            });
+        addXhrCallback((req, args) => {
+            if (~args[1].indexOf("localhost")) {
+                args[1] = args[1].replace("https://", "http://");
+            }
+            return args;
         });
 
     </script>
