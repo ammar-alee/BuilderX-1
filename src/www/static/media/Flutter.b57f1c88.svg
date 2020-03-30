@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512px" height="512px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>icon-flutter</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="icon-flutter" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Flutter" transform="translate(50.000000, 0.000000)" fill="#9E9E9E" fill-rule="nonzero">
+            <polygon id="Shape" points="254.652624 0.000887288284 0.000887288284 254.652624 78.8204802 333.472217 412.293585 0.000887288284"></polygon>
+            <polygon id="Shape" points="252.878226 234.836461 116.53041 371.184277 195.646357 451.482093 274.320434 372.808014 412.293763 234.836461"></polygon>
+            <polygon id="Shape" points="195.647066 451.482446 255.539026 511.374407 412.292698 511.374407 274.31937 372.80837"></polygon>
+            <polygon id="Shape" points="115.643476 372.070678 194.464844 293.24931 274.319014 372.808901 195.646711 451.482979"></polygon>
+        </g>
+    </g>
+</svg>
