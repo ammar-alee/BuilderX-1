@@ -25,7 +25,7 @@
     <script>
         bxEnv = {
             "BUILDERX_APP_SENTRY_DSN": "https://9cacd9f1ac5043c7aa25b0329e89799e@sentry.io/1306171",
-            "BUILDERX_APP_ENVIRONMENT": "cloud",
+            "BUILDERX_APP_ENVIRONMENT": "development",
             "BUILDERX_APP_PORT_START": "8969",
             "BUILDERX_GA_TRACKING_ID": "UA-126658222-2",
             "BUILDERX_API_URL": "{{ local_url }}/api",
@@ -38,6 +38,29 @@
             "BUILDERX_PROJECT_IMAGE": "{{ local_url }}/api/get-files-content/q1wzt9rh0004ws8co4k0oc40og8co0?fileName=/.thumbnail.png",
             "BUILDERX_PROJECT_URL": "{{ local_url }}/app/{{ project_id }}"
         };
+    </script>
+
+    <script>
+        function addXhrCallback(callback) {
+            if (!XMLHttpRequest.callback) {
+                const oldopen = XMLHttpRequest.prototype.open;
+                XMLHttpRequest.prototype.open = function() {
+                    var args = XMLHttpRequest.callback(this, arguments);
+                    oldopen.apply(this, args || arguments);
+                };
+            }
+            XMLHttpRequest.callback = callback;
+        }
+        
+        document.addEventListener("load", function() {
+            addXhrCallback((req, args) => {
+                if (~args[1].indexOf("localhost")) {
+                    args[1] = args[1].replace("https://", "http://");
+                }
+                return args;
+            });
+        });
+
     </script>
 </head>
 
