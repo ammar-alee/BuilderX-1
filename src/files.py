@@ -136,7 +136,8 @@ def save_file(project, filename, file_object):
 def delete_file(file_id):
     project, filename = get_index(file_id)
     path = get_project_file_path(project, filename)
-    os.unlink(path) # Good?
+	if os.path.exists(path):
+        os.unlink(path) # Good? no
 
 
 def get_files_list(project_home):
