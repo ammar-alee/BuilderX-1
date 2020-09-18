@@ -1,6 +1,6 @@
 # BuilderX Offline Build (a.k.a BOB the builder)
 
-This is a cracked offline build for the [BuilderX](https://builderx.io/) program. 
+This is an offline build for the [BuilderX](https://builderx.io/) program. 
 
 ## How to run this?
 
